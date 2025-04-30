@@ -6,32 +6,66 @@ export default function App(){
     const[primeiroNumero, setPrimeiroNumero] = useState(0);
     const[segundoNumero, setSegundoNumero] = useState(0);
     const[resultado, setResultado] = useState(0);
+
+    function somar(){
+        setResultado(parseFloat(primeiroNumero) + parseFloat(segundoNumero));
+        return setResultado;
+    }
+
+    function subtrair(){
+        setResultado(parseFloat(primeiroNumero) - parseFloat(segundoNumero));
+        return setResultado;
+    }
+
+    function multiplicar(){
+        setResultado(parseFloat(primeiroNumero) * parseFloat(segundoNumero));
+        return setResultado;
+    }
+
+    function dividir(){
+        if(parseFloat(segundoNumero) <= 0){
+            setResultado("Impossível dividir por 0");
+        }
+        else{
+            setResultado(parseFloat(primeiroNumero) / parseFloat(segundoNumero));
+        }
+        
+        return setResultado;
+    }
+
+    function limpar(){
+        setPrimeiroNumero(0);
+        setSegundoNumero(0);
+        setResultado(0);
+    }
+
+
     return(
         <View style={styles.tela}>
             <Text style={styles.tituloPrograma}>Calculadora</Text>
 
             <View style={styles.primeiroCampo}>
-                <TextInput placeholder="Informe um número" style={styles.labelPrimeiroCampo} />
+                <TextInput placeholder="Informe um número" value={primeiroNumero} onChangeText={novoNumero => setPrimeiroNumero(novoNumero)} style={styles.labelPrimeiroCampo} />
             </View>
 
             <View style={styles.segundoCampo}>
-                <TextInput placeholder="Informe um número" style={styles.labelPrimeiroCampo} />
+                <TextInput placeholder="Informe um número" value={segundoNumero}  onChangeText={novoNumero => setSegundoNumero(novoNumero)} style={styles.labelPrimeiroCampo} />
             </View>
 
             <View style={styles.areaResultado}>
-                <Text style={styles.resultado}>{resultado}</Text>
+                <Text style={styles.resultado}>Resultado:   {resultado}</Text>
             </View>
 
             <View style={styles.containerBotao}>
                 <View style={styles.botaoGroup}> 
                     <TouchableOpacity style={styles.botoes}
-                    color="#fff"
+                    color="#fff" onPress={somar}
                     >
                         <Text style={styles.somar}>Somar</Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity style={styles.botoes}
-                        color="#fff"
+                        color="#fff" onPress={subtrair}
                     >
                         <Text style={styles.somar}>Subtrair</Text>
                     </TouchableOpacity>
@@ -40,13 +74,13 @@ export default function App(){
 
                 <View style={styles.botaoGroup}> 
                     <TouchableOpacity style={styles.botoes}
-                    color="#fff"
+                    color="#fff" onPress={multiplicar}
                     >
                         <Text style={styles.somar}>Multiplicar</Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity style={styles.botoes}
-                        color="#fff"
+                        color="#fff" onPress={dividir}
                     >
                         <Text style={styles.somar}>Dividir</Text>
                     </TouchableOpacity>
@@ -54,13 +88,11 @@ export default function App(){
             </View>
 
             <View style={styles.btnLimpar}>
-                <TouchableOpacity style={styles.botaoLimpar}color="#fff">
+                <TouchableOpacity style={styles.botaoLimpar}color="#fff" onPress={limpar}>
                         <Text style={styles.somar}>Limpar</Text>
                 </TouchableOpacity>
             </View>
 
-            
-            
         </View>
     );
 }
@@ -132,6 +164,7 @@ const styles = StyleSheet.create({
     resultado: {
         fontSize: 18,
         marginLeft: 15,
+        marginTop: 6,
     },
 
     labelPrimeiroCampo: {
